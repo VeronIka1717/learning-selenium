@@ -12,35 +12,38 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class SauceDemoTest {
-    private static final Logger log= LoggerFactory.getLogger(SauceDemoTest.class);
-    Config config=Config.readConfig();
-    WebDriver driver;
-   LoginPage loginPage;
-   ProductsPage productsPage;
 
+    private static final Logger log = LoggerFactory.getLogger(SauceDemoTest.class);
+    Config config = Config.readConfig();
+    WebDriver driver;
+    LoginPage loginPage;
+    ProductsPage productsPage;
 
     @BeforeMethod
-    public void beforeTest(){
-        //Initiolize driver;
-        driver=new ChromeDriver();
-        loginPage=new LoginPage(driver);
-        productsPage=new ProductsPage(driver);
+    public void beforeTest() {
+        // Initialize driver
+        driver = new ChromeDriver();
+
+        // Initialize pages
+        loginPage = new LoginPage(driver);
+        productsPage = new ProductsPage(driver);
+
+        //TODO: Get URL from config.yaml file
         driver.get("https://www.saucedemo.com");
     }
-    @Test
-    public void testSauceDemoSuccessLogin(){
 
-        //1)URL?->good practice-get url from configuration file
-        //2)Page  Object->
+    @Test
+    public void testSauceDemoSuccessLogin() {
         log.info("Authorize using credentials");
-        loginPage.authorize(config.getCredentials().getLogin(),config.getCredentials().getPassword());
+        loginPage.authorize(config.getCredentials().getLogin(), config.getCredentials().getPassword());
 
         log.info("Asserting Products page title");
-        Assert.assertEquals( productsPage.getProductPageTitle().getText(),"Products");
+        Assert.assertEquals(productsPage.getProductPageTitle().getText(), "Products");
     }
+
     @AfterMethod
-    public void afterTest(){
-        //Close drive
+    public void afterTest() {
+        // Close driver
         driver.close();
         driver.quit();
     }

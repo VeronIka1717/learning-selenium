@@ -1,3 +1,3 @@
-credentials:
-  login :"user-name"
-   password :"password"
+ credentials:
+    login: standard_user
+    password: secret_sauce

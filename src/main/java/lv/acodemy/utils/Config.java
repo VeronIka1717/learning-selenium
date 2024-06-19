@@ -9,13 +9,8 @@ public class Config {
 
     private Credentials credentials;
 
-    public static Config readConfig() {
-
-        return null;
-    }
-
-
     public static class Credentials {
+
         private String login;
         private String password;
 
@@ -39,11 +34,12 @@ public class Config {
     public Credentials getCredentials() {
         return credentials;
     }
+
     public void setCredentials(Credentials credentials) {
         this.credentials = credentials;
     }
 
-    public static Config getInstance() {
+    public static Config readConfig() {
         Yaml yaml = new Yaml();
         try (InputStream inputStream = Config.class.getClassLoader().getResourceAsStream("config.yaml")) {
             if (inputStream == null) {
@@ -52,7 +48,7 @@ public class Config {
             return yaml.loadAs(inputStream, Config.class);
         } catch (IOException e) {
             var message = e.getMessage();
-            System.out.println("Error: " + message);
+            System.out.println(message);
             return null;
         }
     }
